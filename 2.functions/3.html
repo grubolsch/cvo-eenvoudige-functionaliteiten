@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>change the text</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../functions/lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../functions/lib/mocha/mocha.js"></script>
+    <script src="../functions/lib/assert.js"></script>
+
+    <script src="../functions/lib/test-the-dom.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../functions/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Gebruik van ingebouwde functies</h2>
+    <p>
+        Maak een functie met de naam isLeapYear(), die een boolean teruggeeft als een jaar een schrikkeljaar is.
+    </p>
+
+    <ul>
+        <li>Als een jaar deelbaar is door 4, is het een schrikkeljaar.</li>
+        <li>Tenzij het jaar deelbaar is door 100 maar niet door 400, in dat geval is het geen schrikkeljaar.</li>
+    </ul>
+
+    <p>Tip: Gebruik <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder" target="_blank">de remainder operator</a></p>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function isLeapYear(year) {
+                if(year % 4 !== 0) {
+                    return false;
+                }
+
+                if(year % 100 !== 0) {
+                    if(year % 4 === 0) {
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                if(year % 400 !== 0) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            // write me!
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('Leap Year Function', () => {
+
+            it('Should return true for leap years divisible by 4 but not by 100', () => {
+                assert.strictEqual(isLeapYear(2008), true);
+                assert.strictEqual(isLeapYear(2012), true);
+                assert.strictEqual(isLeapYear(2016), true);
+            });
+
+            it('Should return true for leap years divisible by 400', () => {
+                assert.strictEqual(isLeapYear(2000), true);
+                assert.strictEqual(isLeapYear(2400), true);
+            });
+
+            it('Should return false for years not divisible by 4', () => {
+                assert.strictEqual(isLeapYear(2017), false);
+                assert.strictEqual(isLeapYear(2019), false);
+            });
+
+            it('Should return false for years divisible by 100 but not by 400', () => {
+                assert.strictEqual(isLeapYear(1700), false);
+                assert.strictEqual(isLeapYear(1800), false);
+                assert.strictEqual(isLeapYear(1900), false);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

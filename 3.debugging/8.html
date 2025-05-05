@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Debugging: oefening 8</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Oefening 8: Is hetzelfde?</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <p>Zorg dat je een functie hebt die 2 personen met elkaar kan vergelijken, en true teruggeeft indien ze exact hetzelfde zijn. De structuur van de array is:</p>
+        <pre><code>
+            const person2 = {
+                name:"James"
+            }
+        </code></pre>
+
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function isTheSamePerson(personA, personB) {
+                return personA === personB;
+            }
+    </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('sum', function () {
+            it('Is deze persoon hetzelfde?', function () {
+                const person1 = {
+                    name:"James"
+                }
+                const person2 = {
+                    name:"James"
+                }
+                const person3 = {
+                    name:"John"
+                }
+                assert.strictEqual(isTheSamePerson(person1, person2), true);
+                assert.strictEqual(isTheSamePerson(person1, person3), false);
+                assert.strictEqual(isTheSamePerson(person2, person3), false);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

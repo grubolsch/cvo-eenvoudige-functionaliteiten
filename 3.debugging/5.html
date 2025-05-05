@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Debugging: oefening 5</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Oefening 5: Gegroet!</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <p>Groet de gebruiker met zijn naam.</p>
+
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function greet(name) {
+                return “Hallo, ${naam}!”;
+            }
+    </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('sum', function () {
+            it('Groet de gebruiker met zijn naam', function () {
+                assert.strictEqual(greet('koen'), 'Hallo, koen!');
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

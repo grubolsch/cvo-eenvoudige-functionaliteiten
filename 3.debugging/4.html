@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Debugging: oefening 4</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Oefening 4: Groet de gebruiker met naam en leeftijd</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <p>Groet de gebruiker met naam en leeftijd. De input is een associatie array met de volgende structuur:</p>
+        <pre><code>
+            let person = {
+                name: "Alice",
+                age: 30,
+            };
+        </code></pre>
+        <p>Geef een foutmelding als de gebruiker nog niet geboren is (negatieve leeftijd)</p>
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function sayHi(person) {
+                if (person.age <= 0) {
+                    return 'Je bent nog niet geboren!';
+                }
+
+                return 'Hallo ' + person.name + ', je bent ' + person.Age + ' jaren oud';
+            }
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('sum', function () {
+            it('Groet de gebruiker', function () {
+                assert.strictEqual(sayHi({
+                    name: "Alice",
+                    age: 30,
+                }), 'Hallo Alice, je bent 30 jaren oud');
+
+            });
+            it('Geef melding indien negatief aantal jaren oud', () => {
+                assert.strictEqual(sayHi({
+                    name: "Alice",
+                    age: -5,
+                }), 'Je bent nog niet geboren!');
+            });
+            it('Net geboren', () => {
+                assert.strictEqual(sayHi({
+                    name: "Alice",
+                    age: 0,
+                }), 'Hallo Alice, je bent 0 jaren oud');
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

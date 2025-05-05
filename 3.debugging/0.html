@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <title>Debugging: oefening 0</title>
+
+
+    <link href="../lib/mocha/mocha.css" rel="stylesheet" />
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/style.css" />
+</head>
+
+<body>
+<header>
+    <h2>Oefening 0: does not even load!</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <p>Zorg dat de functie het getal als parameter maal 2 doet.</p>
+
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            funktion doubleIt(var) [
+                return var * 2;
+            ];
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('sum', function() {
+            it('Verdubbel het nummer', function() {
+                assert.strictEqual(doubleIt(2), 4);
+                assert.strictEqual(doubleIt(0), 0);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

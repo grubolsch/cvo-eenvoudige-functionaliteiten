@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Debugging: oefening 9</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Oefening 8: Is hetzelfde?</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function calculatePrice(products, dangerousTransport, internationalTraffic, refrigeratedTransport, discountPercentage, vat) {
+                const DISCOUNT_MINIMUM = 1000;
+
+                let productTotal = products.reduce((total, product) => {
+                    return total + (product.price * product.quantity)
+                }, 0);
+
+                if(productTotal >= DISCOUNT_MINIMUM && discountPercentage > 0) {
+                    let discount = productTotal / 100 * discountPercentage;
+                    productTotal -= discount;
+                }
+
+                let vatTotal = productTotal / 100 * vat;
+
+                let transportCost = 30;
+                if(dangerousTransport) {
+                    transportCost = 1000;
+                }
+
+                if(refrigeratedTransport) {
+                    transportCost += 500;
+                }
+
+                if(internationalTraffic) {
+                    transportCost *= 2;
+                }
+
+                if(discountPercentage > 0) {
+                    let discount = transportCost / 100 * discountPercentage;
+                    transportCost -= discount;
+                }
+
+                let vatTransportCost = transportCost / 100 * vat;
+
+                return {
+                    discountPercentage,
+                    vatTransportCost,
+                    transportCost,
+                    vatTotal,
+                    productTotal,
+                    total: productTotal + transportCost
+                }
+            }
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        let products = [{
+            price: 10,
+            quantity: 5
+        }, {
+            price: 25,
+            quantity: 4
+        }];
+
+        function testFullCart(cart, expectedResult) {
+            assert.strictEqual(cart.discountPercentage, expectedResult.discountPercentage);
+            assert.strictEqual(cart.vatTransportCost, expectedResult.vatTransportCost);
+            assert.strictEqual(cart.transportCost, expectedResult.transportCost);
+            assert.strictEqual(cart.vatTotal, expectedResult.vatTotal);
+            assert.strictEqual(cart.productTotal, expectedResult.productTotal);
+            assert.strictEqual(cart.total, expectedResult.total);
+        }
+
+        describe('sum', function () {
+            it('Product prices give correct total', function () {
+                let cart = calculatePrice(products, false, false, false, 0, 0);
+                let expectedResult = {
+                    discountPercentage: 0,
+                    vatTransportCost: 0,
+                    transportCost: 30,
+                    vatTotal: 0,
+                    productTotal: 150,
+                    total: 180
+                };
+                testFullCart(cart, expectedResult);
+            });
+
+            it('Product prices give correct total, when dangerous transport', function () {
+                let cart = calculatePrice(products, true, false, false, 0, 0);
+                let expectedResult = {
+                    discountPercentage: 0,
+                    vatTransportCost: 0,
+                    transportCost: 1000,
+                    vatTotal: 0,
+                    productTotal: 150,
+                    total: 1150
+                };
+                testFullCart(cart, expectedResult);
+            });
+
+            it('Product prices give correct total, when not dangerous international transport', function () {
+                let cart = calculatePrice(products, false, true, false, 0, 0);
+                let expectedResult = {
+                    discountPercentage: 0,
+                    vatTransportCost: 0,
+                    transportCost: 60,
+                    vatTotal: 0,
+                    productTotal: 150,
+                    total: 210
+                };
+                testFullCart(cart, expectedResult);
+            });
+
+            it('Product prices give correct total, when dangerous international transport', function () {
+                let cart = calculatePrice(products, true, true, false, 0, 0);
+                let expectedResult = {
+                    discountPercentage: 0,
+                    vatTransportCost: 0,
+                    transportCost: 2000,
+                    vatTotal: 0,
+                    productTotal: 150,
+                    total: 2150
+                };
+                testFullCart(cart, expectedResult);
+            });
+
+            it('Product prices give correct total, when dangerous international transport', function () {
+                let cart = calculatePrice(products, true, true, false, 0, 0);
+                let expectedResult = {
+                    discountPercentage: 0,
+                    vatTransportCost: 0,
+                    transportCost: 2000,
+                    vatTotal: 0,
+                    productTotal: 150,
+                    total: 2150
+                };
+                testFullCart(cart, expectedResult);
+            });
+        });
+
+
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

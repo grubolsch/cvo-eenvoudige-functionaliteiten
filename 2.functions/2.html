@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>change the text</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../functions/lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../functions/lib/mocha/mocha.js"></script>
+    <script src="../functions/lib/assert.js"></script>
+
+    <script src="../functions/lib/test-the-dom.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../functions/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Gebruik van ingebouwde functies</h2>
+    <p>Schrijf een functie genaamd reverseString() die een string als parameter accepteert en de omgekeerde versie ervan teruggeeft. Gebruik de ingebouwde JavaScript-functies om dit te doen, zoals .split(), .reverse() en .join(). Test de functie met verschillende strings.</p>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function reverseString(word) {
+                return word.split('').reverse().join('');
+            }
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('Reverse String Function', () => {
+
+            it('Should reverse a string correctly - uneven number of chars', () => {
+                const inputString = 'hello';
+                const expectedOutput = 'olleh';
+                assert.strictEqual(reverseString(inputString), expectedOutput);
+            });
+
+            it('Should reverse a string correctly - even number of chars', () => {
+                const inputString = 'hell';
+                const expectedOutput = 'lleh';
+                assert.strictEqual(reverseString(inputString), expectedOutput);
+            });
+
+            it('Should handle an empty string', () => {
+                const inputString = '';
+                const expectedOutput = '';
+                assert.strictEqual(reverseString(inputString), expectedOutput);
+            });
+
+            it('Should handle a string with only one character', () => {
+                const inputString = 'a';
+                const expectedOutput = 'a';
+                assert.strictEqual(reverseString(inputString), expectedOutput);
+            });
+
+            it('Should handle a string with special characters', () => {
+                const inputString = '!@#$%^&*';
+                const expectedOutput = '*&^%$#@!';
+                assert.strictEqual(reverseString(inputString), expectedOutput);
+            });
+
+            it('Should handle a string with whitespace', () => {
+                const inputString = '   hello world   ';
+                const expectedOutput = '   dlrow olleh   ';
+                assert.strictEqual(reverseString(inputString), expectedOutput);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

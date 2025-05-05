@@ -1,0 +1,65 @@
+<!-- 1.dom/8-greeting-form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Greeting Form</title>
+    <meta name="description" content="Read a text input and display a greeting"/>
+    <link href="../lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+    <script src="../lib/test-the-dom.js"></script>
+    <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+<header>
+    <h2>Greeting Form</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <div id="expected">
+            <p>Read the name from the input and, on button click, display <code>Hello, &lt;name&gt;!</code> in the
+                output box.</p>
+
+            <form id="greetForm">
+                <label for="nameInput">Your name:</label>
+                <input type="text" id="nameInput"/>
+                <button type="button" id="greetBtn">Greet</button>
+            </form>
+            <div id="greetOutput"></div>
+        </div>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+</section>
+
+<script src="8.js"></script>
+<script>
+    mocha.setup('bdd');
+
+    describe('Greeting Form', function () {
+        it('displays "Hello, Alice!" when name is Alice and button clicked', function () {
+            const input = document.getElementById('nameInput');
+            const button = document.getElementById('greetBtn');
+            input.value = 'Alice';
+            button.click();
+            const out = document.getElementById('greetOutput');
+            assert.equal(out.textContent, 'Hello, Alice!');
+        });
+
+        it('works with any name', function () {
+            const input = document.getElementById('nameInput');
+            input.value = 'Bob';
+            document.getElementById('greetBtn').click();
+            assert.equal(
+                document.getElementById('greetOutput').textContent,
+                'Hello, Bob!'
+            );
+        });
+    });
+
+    mocha.run();
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <title>Debugging: oefening 1</title>
+
+
+    <link href="../lib/mocha/mocha.css" rel="stylesheet" />
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/style.css" />
+</head>
+
+<body>
+<header>
+    <h2>Oefening 1: Tel de getallen op</h2>
+</header>
+
+<section class="things-to-study">
+
+    <div id="side to inspect" class="exercise-output">
+        <p>Zorg dat de functie 2 getallen kan optellen, en zorg dat negatieve getallen correct worden berekend: <em>-5 + 5 = 0</em></p>
+
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function sum(a, b) {
+                let a;
+                let b;
+                return Math.abs(a) + Math.abs(b);
+            }
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('sum', function() {
+            it('Tel 2 getallen op', function() {
+                assert.strictEqual(sum(1, 2), 3);
+            });
+
+            it('Kan werken met negatieve getallen', function() {
+                assert.strictEqual(sum(-5, 5), 0);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

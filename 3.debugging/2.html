@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Debugging: oefening 2</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Oefening 2: Vanaf 25 graden is het te warm</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <p>Vertel aan de gebruiker aan de hand van de temperatuur of het te warm is of niet. Het is te warm startende vanaf 25 graden en hoger.</p>
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            const TO_HOT_LIMIT = 25;
+
+            function isItToHot(currentTemperature) {
+                if (currentTemperature < TO_HOT_LIMIT) {
+                    console.log("It's hot outside!");
+                    return true;
+                }
+
+                console.log("It's cold outside!");
+                return false;
+            }
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('sum', function () {
+            it('Het is 26 graden, dat is warm', function () {
+                assert.strictEqual(isItToHot(26), true);
+            });
+
+            it('Het is 20 graden, dat is koud', function () {
+                assert.strictEqual(isItToHot(20), false);
+            });
+
+            it('Het is 25 graden, dat is warm', function () {
+                assert.strictEqual(isItToHot(25), true);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>change the text</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../functions/lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../functions/lib/mocha/mocha.js"></script>
+    <script src="../functions/lib/assert.js"></script>
+
+    <script src="../functions/lib/test-the-dom.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../functions/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Return values</h2>
+    <p>Schrijf een JavaScript-functie met de naam calculateTotal() waaraan een associatieve array moet doorgegeven worden
+        die items in het winkelwagentje vertegenwoordigen. De array moet eigenschappen hebben voor naam, prijs en
+        hoeveelheid. De functie moet de totale kosten van alle artikelen in de winkelwagen berekenen en returnen,
+        waarbij eventuele toepasselijke kortingen worden toegepast op basis van vooraf gedefinieerde regels.</p>
+
+    <ul>
+        <li>Als de totale kosten hoger zijn dan EUR 100, past u een korting van 10% toe.</li>
+        <li>Als de totale kosten hoger zijn dan EUR 200, past u een korting van 15% toe.</li>
+        <li>Als de hoeveelheid van een artikel 10 of meer bedraagt, past u een korting van 5% toe. Je hebt dan geen recht maar op de korting van 10 en 15 %.</li>
+    </ul>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            //Example of the array
+            let cart = [
+                {name: 'Item 1', price: 10, quantity: 2},
+                {name: 'Item 2', price: 20, quantity: 1},
+                {name: 'Item 3', price: 15, quantity: 3}
+            ];
+
+            function calculateTotal(cart) {
+                let total = 0;
+                let productOverLimit = false;
+                cart.forEach((product) => {
+                    total += product.price * product.quantity;
+
+                    if(product.quantity >= 10) {
+                        // let discount = product.price * product.quantity * 0.05;
+                        // total -= discount;
+
+                        productOverLimit = true;
+                    }
+                });
+
+                let total2 = cart.reduce((total, product) => {
+                    return product.price * product.quantity + total;
+                }, 0);
+                
+                if(productOverLimit) {
+                    return total * 0.95;
+                }
+                if(total > 200) {
+                    return total * 0.85;
+                }
+                if(total > 100) {
+                    return total * 0.9;
+                }
+
+                return total;
+            }
+
+            // write me!
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+        describe('Shopping Cart Total', () => {
+
+            it('Should calculate total cost correctly without discounts', () => {
+                const cart = [
+                    {name: 'Item 1', price: 10, quantity: 2},
+                    {name: 'Item 2', price: 20, quantity: 1},
+                    {name: 'Item 3', price: 15, quantity: 3}
+                ];
+                const expectedTotal = 10 * 2 + 20 + 15 * 3; // Expected total without discounts
+                assert.equal(calculateTotal(cart), expectedTotal);
+            });
+
+            it('Should apply 10% discount for total cost over $100', () => {
+                const cart = [
+                    {name: 'Item 1', price: 50, quantity: 3},
+                    {name: 'Item 2', price: 10, quantity: 2}
+                ];
+                const expectedTotal = (50 * 3 + 10 * 2) * 0.9; // Expected total with 10% discount
+                assert.equal(calculateTotal(cart), expectedTotal);
+            });
+
+            it('Should apply 15% discount for total cost over $200', () => {
+                const cart = [
+                    {name: 'Item 1', price: 50, quantity: 5},
+                    {name: 'Item 2', price: 40, quantity: 3}
+                ];
+                const expectedTotal = (50 * 5 + 40 * 3) * 0.85; // Expected total with 15% discount
+                assert.equal(calculateTotal(cart), expectedTotal);
+            });
+
+            it('Should apply 5% discount for items with quantity 10 or more', () => {
+                const cart = [
+                    {name: 'Item 1', price: 10, quantity: 10},
+                    {name: 'Item 2', price: 5, quantity: 8}
+                ];
+                const expectedTotal = (10 * 10 + 5 * 8) * 0.95; // Expected total with 5% discount on Item 1
+                assert.equal(calculateTotal(cart), expectedTotal);
+            });
+
+            it('Should return 0 for an empty cart', () => {
+                const cart = [];
+                const expectedTotal = 0;
+                assert.equal(calculateTotal(cart), expectedTotal);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

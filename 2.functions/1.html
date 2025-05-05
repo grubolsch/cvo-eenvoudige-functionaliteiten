@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <title>change the text</title>
+    <meta name="description" content="change the text" />
+
+    <link href="../functions/lib/mocha/mocha.css" rel="stylesheet" />
+    <script src="../functions/lib/mocha/mocha.js"></script>
+    <script src="../functions/lib/assert.js"></script>
+
+    <script src="../functions/lib/test-the-dom.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../functions/style.css" />
+</head>
+
+<body>
+<header>
+    <h2>Parameters</h2>
+    <p>Schrijf een functie genaamd calculateArea() die de oppervlakte van een rechthoek berekent. De functie moet lengte en breedte als parameters accepteren en de oppervlakte teruggeven. Test de functie door verschillende waarden door te geven.</p>
+    <p>Geef <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN">NaN</a> als er ongeldige input wordt gegeven.</p>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function calculateArea(length, width) {
+                
+                if(length*width < 0 ) {
+                    return undefined;
+                }
+
+                return length * width;
+            }
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+        describe('Scenario 1: Calculating area of a rectangle', () => {
+
+            // Test case 1: Test with positive integer values
+            it('Should return the correct area for positive integer values', () => {
+                const length = 5;
+                const width = 10;
+                const expectedArea = 50;
+                const calculatedArea = calculateArea(length, width);
+                assert.equal(calculatedArea, expectedArea);
+            });
+
+            // Test case 2: Test with zero values
+            it('Should return 0 when either length or width is 0', () => {
+                const length = 0;
+                const width = 8;
+                const expectedArea = 0;
+                const calculatedArea = calculateArea(length, width);
+                assert.equal(calculatedArea, expectedArea);
+            });
+
+            // Test case 3: Test with negative values
+            it('Should handle negative values gracefully', () => {
+                const length = -3;
+                const width = 6;
+                const expectedArea = undefined; // Assuming function returns NaN for negative inputs, adjust as needed
+                const calculatedArea = calculateArea(length, width);
+                assert.equal(calculatedArea, expectedArea);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

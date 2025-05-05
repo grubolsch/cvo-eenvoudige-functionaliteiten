@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Debugging: oefening 3</title>
+    <meta name="description" content="change the text"/>
+
+    <link href="../lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../lib/style.css"/>
+</head>
+
+<body>
+<header>
+    <h2>Oefening 3: Welke letter in het alfabet?</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <p>Zorg dat deze functie de letter in het alfabet teruggeeft afhankelijk van zijn positie. Bv. cijfer 2 is b, 3 is c... Als je een te groot of klein getal ingeeft geef je <em>undefined</em> terug.</p>
+
+        <script id="dom-manipulation-script">
+            'use strict';
+            debugger;
+
+            function numberToChar(index) {
+                const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+                if(index < 0 || index >= alphabet.length) {
+                    return undefined;
+                }
+
+                return alphabet[index+1];
+            }
+        </script>
+    </div>
+
+    <div id="mocha" class="mocha-output"></div>
+
+    <script id="run the tests!">
+        mocha.setup({
+            ui: 'bdd',
+        });
+
+        describe('sum', function () {
+            it('De hoeveelste letter in het alfabet?', function () {
+                assert.strictEqual(numberToChar(1), 'a');
+                assert.strictEqual(numberToChar(2), 'b');
+                assert.strictEqual(numberToChar(26), 'z');
+            });
+
+            it('Test te grote of kleine getallen', function () {
+                assert.strictEqual(numberToChar(0), undefined);
+                assert.strictEqual(numberToChar(27), undefined);
+            });
+        });
+        mocha.run();
+    </script>
+</section>
+</body>
+</html>

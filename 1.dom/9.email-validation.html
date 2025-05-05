@@ -1,0 +1,66 @@
+<!-- 1.dom/9-email-validation.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Email Validation Form</title>
+    <meta name="description" content="Enable the submit button only for valid emails"/>
+    <link href="../lib/mocha/mocha.css" rel="stylesheet"/>
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+    <script src="../lib/test-the-dom.js"></script>
+    <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+
+<header>
+    <h2>Email Validation Form</h2>
+</header>
+
+<section class="things-to-study">
+    <div id="side to inspect" class="exercise-output">
+        <div id="expected">
+            <p>Listen for input; enable the Submit button only if the value is a valid email address.</p>
+
+            <form id="emailForm">
+                <label for="emailInput">Email:</label>
+                <input type="email" id="emailInput"/>
+                <button type="submit" id="submitBtn">Submit</button>
+            </form>
+            <p id="emailMessage"></p>
+        </div>
+
+    </div>
+    <div id="mocha" class="mocha-output"></div>
+</section>
+
+<script src="9.js"></script>
+<script>
+    mocha.setup('bdd');
+
+    describe('Email Validation', function () {
+        const input = document.getElementById('emailInput');
+        const btn = document.getElementById('submitBtn');
+
+        it('make field disabled when loading page', function () {
+            input.value = '';
+            assert.equal(true, btn.disabled);
+        });
+
+        it('keeps submit disabled for invalid email', function () {
+            input.value = 'not-an-email';
+            input.dispatchEvent(new Event('input'));
+            assert.equal(true, btn.disabled);
+        });
+
+        it('enables submit for valid email', function () {
+            input.value = 'user@example.com';
+            input.dispatchEvent(new Event('input'));
+            assert.equal(false, btn.disabled);
+        });
+    });
+
+    mocha.run();
+</script>
+</body>
+</html>
